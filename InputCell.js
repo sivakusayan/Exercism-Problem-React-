@@ -1,12 +1,18 @@
 /**
  * A cell with settable values.
+ *
+ * @property {*} value
+ *  The value of this input cell
+ * @property {Object[]} computeCells
+ *  Array of compute cells whose values depend on
+ *  this cell.
  */
 class InputCell {
   /**
    * Constructs an instance of InputCell
    * with the defined value.
    *
-   * @param value
+   * @param {*} value
    *  The value to assign to this InputCell.
    */
   constructor(value) {

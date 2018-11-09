@@ -1,20 +1,30 @@
 /**
  * A cell whose values are computed from other cells.
+ *
+ * @property {Object[]} inputCells
+ *  Cells being used as inputs for this cell
+ * @property {Function} fn
+ *  The function that determines what computations
+ *  to do with the inputCells
+ * @property {Object[]} callbackCells
+ *  Cells whose callback are called whenever this cell's value changes.
+ * @property {*} prevValue
+ *  Keeps track of the cell's previous value before an input cell changes.
  */
 class ComputeCell {
   /**
    * Constructs an instance of ComputeCell
-   * with the defined args and
+   * with the defined inputs and
    * computation callback.
    *
-   * @param ArgCells
-   *  The cells to use as arguments in the callback.
-   * @param fn
+   * @param {Object[]}inputCells
+   *  The cells to use as inputuments in the callback.
+   * @param {Function} fn
    *  A function that will be used to do computations
-   *  with this instance's arg cells
+   *  with this instance's input cells
    */
-  constructor(argCells, fn) {
-    this.argCells = argCells;
+  constructor(inputCells, fn) {
+    this.inputCells = inputCells;
     this.fn = fn;
     this.callbackCells = [];
     this.prevValue = null;
@@ -22,12 +32,22 @@ class ComputeCell {
     this.linkInputCells(this);
   }
 
+  /**
+   * Goes down the dependency graph, starting at
+   * computeCell, and adds that computeCell into
+   * the computeCell list of every input cell that
+   * is visited.
+   *
+   * @param {Object} computeCell
+   *  The compute cell to start from
+   *
+   */
   linkInputCells(computeCell) {
-    for (const argCell of this.argCells) {
-      if (argCell.argCells) {
-        argCell.linkInputCells(computeCell);
+    for (const inputCell of this.inputCells) {
+      if (inputCell.inputCells) {
+        inputCell.linkInputCells(computeCell);
       } else {
-        argCell.addToComputeCells(computeCell);
+        inputCell.addToComputeCells(computeCell);
       }
     }
   }
@@ -35,7 +55,7 @@ class ComputeCell {
   /**
    * Saves the current value into previous value, and
    * does the same for the compute cells above it.
-   * Used before an arg cell is updated.
+   * Used before an input cell is updated.
    */
   saveValue() {
     this.prevValue = this.value;
@@ -44,10 +64,10 @@ class ComputeCell {
   /**
    * @returns
    *  The return value of fn when called
-   *  with the argument argCells.
+   *  with the inputument inputCells.
    */
   get value() {
-    return this.fn(this.argCells);
+    return this.fn(this.inputCells);
   }
 
   /**
@@ -63,12 +83,12 @@ class ComputeCell {
   }
 
   /**
-   * Invoked whenever an arg value is updated.
+   * Invoked whenever an input value is updated.
    * Checks if the previous value is different from
    * the current value. If it is, call all the added
    * callback cells.
    */
-  onArgUpdate() {
+  oninputUpdate() {
     if (this.prevValue !== this.value) {
       // Notify callback cells subscribed to changes
       for (const callbackCell of this.callbackCells) {
