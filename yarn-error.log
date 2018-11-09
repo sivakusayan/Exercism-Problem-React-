@@ -1,0 +1,115 @@
+Arguments: 
+  C:\Program Files\nodejs\node.exe C:\Program Files (x86)\Yarn\bin\yarn.js init
+
+PATH: 
+  C:\Program Files\Git\mingw64\bin;C:\Program Files\Git\usr\bin;C:\Users\sivak\bin;C:\Python27;C:\Python27\Scripts;C:\ProgramData\Boxstarter;C:\Program Files (x86)\Common Files\Oracle\Java\javapath;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0;C:\WINDOWS\System32\OpenSSH;C:\Program Files\Microsoft VS Code\bin;C:\Program Files\Java\jdk-10.0.2\bin;C:\Program Files (x86)\Google\Chrome\Application;C:\Users\sivak\AppData\Roaming\nvm;C:\Program Files\nodejs;C:\Program Files\Git\cmd;C:\Program Files (x86)\Yarn\bin;C:\Program Files\nodejs;C:\ProgramData\chocolatey\bin;C:\Program Files (x86)\Common Files\Oracle\Java\javapath;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0;C:\WINDOWS\System32\OpenSSH;C:\Program Files\Git\cmd;C:\Program Files\Microsoft VS Code\bin;C:\Program Files\Java\jdk-10.0.2\bin;C:\Program Files (x86)\Yarn\bin;C:\Users\sivak\Downloads\php-7.1.19-Win32-VC14-x64;C:\Users\sivak\AppData\Roaming\npm\node_modules\live-server;C:\Program Files\heroku\bin;C:\Program Files (x86)\Google\Chrome\Application;C:\Users\sivak\AppData\Roaming\nvm;C:\Program Files\nodejs;C:\Users\sivak\AppData\Local\Yarn\bin;C:\Exercism;C:\Users\sivak\AppData\Roaming\npm
+
+Yarn version: 
+  1.10.1
+
+Node version: 
+  11.1.0
+
+Platform: 
+  win32 x64
+
+Trace: 
+  Error: canceled
+      at Interface.<anonymous> (C:\Program Files (x86)\Yarn\lib\cli.js:116426:13)
+      at Interface.emit (events.js:182:13)
+      at Interface._ttyWrite (readline.js:793:16)
+      at ReadStream.onkeypress (readline.js:178:10)
+      at ReadStream.emit (events.js:182:13)
+      at emitKeys (internal/readline.js:424:14)
+      at emitKeys.next (<anonymous>)
+      at ReadStream.onData (readline.js:1030:36)
+      at ReadStream.emit (events.js:182:13)
+      at addChunk (_stream_readable.js:283:12)
+
+npm manifest: 
+  {
+    "name": "exercism-javascript",
+    "version": "0.0.0",
+    "description": "Exercism exercises in Javascript.",
+    "author": "Katrina Owen",
+    "private": true,
+    "repository": {
+      "type": "git",
+      "url": "https://github.com/exercism/javascript"
+    },
+    "devDependencies": {
+      "babel-eslint": "^10.0.1",
+      "babel-jest": "^21.2.0",
+      "babel-plugin-transform-builtin-extend": "^1.1.2",
+      "babel-preset-env": "^1.7.0",
+      "eslint": "^5.6.0",
+      "eslint-config-airbnb-base": "^13.1.0",
+      "eslint-plugin-import": "^2.14.0",
+      "jest": "^23.6.0"
+    },
+    "jest": {
+      "modulePathIgnorePatterns": [
+        "package.json"
+      ]
+    },
+    "babel": {
+      "presets": [
+        [
+          "env",
+          {
+            "targets": [
+              {
+                "node": "current"
+              }
+            ]
+          }
+        ]
+      ],
+      "plugins": [
+        [
+          "babel-plugin-transform-builtin-extend",
+          {
+            "globals": [
+              "Error"
+            ]
+          }
+        ],
+        [
+          "transform-regenerator"
+        ]
+      ]
+    },
+    "scripts": {
+      "test": "jest --no-cache ./*",
+      "watch": "jest --no-cache --watch ./*",
+      "lint": "eslint .",
+      "lint-test": "eslint . && jest --no-cache ./* "
+    },
+    "eslintConfig": {
+      "parser": "babel-eslint",
+      "parserOptions": {
+        "ecmaVersion": 7,
+        "sourceType": "module"
+      },
+      "env": {
+        "es6": true,
+        "node": true,
+        "jest": true
+      },
+      "extends": "airbnb-base",
+      "rules": {
+        "import/no-unresolved": "off",
+        "import/extensions": "off",
+        "import/prefer-default-export": "off",
+        "import/no-default-export": "off"
+      }
+    },
+    "license": "MIT",
+    "dependencies": {}
+  }
+
+yarn manifest: 
+  No manifest
+
+Lockfile: 
+  No lockfile
