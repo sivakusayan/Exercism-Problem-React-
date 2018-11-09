@@ -1,7 +1,12 @@
 const InputCell = require('./InputCell');
 const ComputeCell = require('./ComputeCell');
+const CallbackCell = require('./CallbackCell');
 
-const inputCell = new InputCell(10);
-const computeCell = new ComputeCell([inputCell], inputCells => inputCells[0].value * 2);
+const inputCell = new InputCell(1);
+console.log(!!inputCell.argCells);
 
-console.log(computeCell.value);
+module.exports = {
+  InputCell,
+  ComputeCell,
+  CallbackCell,
+};
