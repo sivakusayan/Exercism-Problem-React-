@@ -25,11 +25,12 @@ class InputCell {
    * of InputCell.
    */
   setValue(value) {
+    // Save old values in computeCell for comparison checks
     for (const computeCell of this.computeCells) {
       computeCell.saveValue();
     }
     this.value = value;
-    this.notifyComputeCells();
+    this.onUpdate();
   }
 
   /**
@@ -46,10 +47,10 @@ class InputCell {
   }
 
   /**
-   * Notifies the compute cells that reference
-   * this cell that its value has been changed.
+   * Notifies the relevant compute cells that
+   * this cell's value has been changed.
    */
-  notifyComputeCells() {
+  onUpdate() {
     for (const computeCell of this.computeCells) {
       computeCell.onInputUpdate();
     }

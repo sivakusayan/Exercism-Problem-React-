@@ -1,53 +1,57 @@
 /**
  * A cell whose values are computed from other cells.
  *
- * @property {Object[]} inputCells
- *  Cells being used as inputs for this cell
+ * @property {Object[]} argCells
+ *  Cells being used as arguments for this cell
  * @property {Function} fn
  *  The function that determines what computations
- *  to do with the inputCells
+ *  to do with the argCells
  * @property {Object[]} callbackCells
- *  Cells whose callback are called whenever this cell's value changes.
+ *  Cells whose callback are invoked whenever this cell's value changes.
  * @property {*} prevValue
- *  Keeps track of the cell's previous value before an input cell changes.
+ *  Keeps track of the cell's previous value before an arg cell changes.
  */
 class ComputeCell {
   /**
    * Constructs an instance of ComputeCell
-   * with the defined inputs and
+   * with the defined args and
    * computation callback.
    *
-   * @param {Object[]}inputCells
-   *  The cells to use as inputuments in the callback.
+   * @param {Object[]}argCells
+   *  The cells to use as arguments in the callback.
    * @param {Function} fn
    *  A function that will be used to do computations
-   *  with this instance's input cells
+   *  with this instance's arg cells
    */
-  constructor(inputCells, fn) {
-    this.inputCells = inputCells;
+  constructor(argCells, fn) {
+    this.argCells = argCells;
     this.fn = fn;
     this.callbackCells = [];
     this.prevValue = null;
 
-    this.linkInputCells(this);
+    // Link any arg cells that influence
+    // this cell's value
+    this.linkArgCells(this);
   }
 
   /**
    * Goes down the dependency graph, starting at
-   * computeCell, and adds that computeCell into
-   * the computeCell list of every input cell that
-   * is visited.
+   * computeCell, and adds it into the computeCell
+   * list of every input cell that is visited. Traverses
+   * the graph by recursion.
    *
    * @param {Object} computeCell
    *  The compute cell to start from
    *
    */
-  linkInputCells(computeCell) {
-    for (const inputCell of this.inputCells) {
-      if (inputCell.inputCells) {
-        inputCell.linkInputCells(computeCell);
+  linkArgCells(computeCell) {
+    for (const argCell of this.argCells) {
+      // If argCell is an instance of ComputeCell
+      if (argCell.argCells) {
+        argCell.linkArgCells(computeCell);
+      // Else, it must be an InputCell
       } else {
-        inputCell.addToComputeCells(computeCell);
+        argCell.addToComputeCells(computeCell);
       }
     }
   }
@@ -55,7 +59,7 @@ class ComputeCell {
   /**
    * Saves the current value into previous value, and
    * does the same for the compute cells above it.
-   * Used before an input cell is updated.
+   * Used before an arg cell is updated.
    */
   saveValue() {
     this.prevValue = this.value;
@@ -64,10 +68,10 @@ class ComputeCell {
   /**
    * @returns
    *  The return value of fn when called
-   *  with the inputument inputCells.
+   *  with the argument argCells.
    */
   get value() {
-    return this.fn(this.inputCells);
+    return this.fn(this.argCells);
   }
 
   /**
@@ -93,9 +97,9 @@ class ComputeCell {
   }
 
   /**
-   * Invoked whenever an input value is updated.
-   * Checks if the previous value is different from
-   * the current value. If it is, call all the added
+   * Invoked whenever a relevant input cell is updated.
+   * Checks if this cell's previous value is different from
+   * its current value. If it is, call all the added
    * callback cells.
    */
   onInputUpdate() {
