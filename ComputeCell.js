@@ -83,12 +83,22 @@ class ComputeCell {
   }
 
   /**
+   * Unsubscribes a callback cell from this cell.
+   *
+   * @param {Object} callbackCell
+   *  The callbackCell to unsubscribe
+   */
+  removeCallback(callbackCell) {
+    this.callbackCells = this.callbackCells.filter(cell => cell !== callbackCell);
+  }
+
+  /**
    * Invoked whenever an input value is updated.
    * Checks if the previous value is different from
    * the current value. If it is, call all the added
    * callback cells.
    */
-  oninputUpdate() {
+  onInputUpdate() {
     if (this.prevValue !== this.value) {
       // Notify callback cells subscribed to changes
       for (const callbackCell of this.callbackCells) {

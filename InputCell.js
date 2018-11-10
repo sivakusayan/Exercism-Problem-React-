@@ -51,7 +51,7 @@ class InputCell {
    */
   notifyComputeCells() {
     for (const computeCell of this.computeCells) {
-      computeCell.onArgUpdate();
+      computeCell.onInputUpdate();
     }
   }
 }
